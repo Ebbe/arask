@@ -13,7 +13,7 @@ module Arask
     end
   end
 
-  def self.create(script:, interval:, run_first_time: false)
+  def self.create(script: nil, task: nil, interval:, run_first_time: false)
     case interval
     when :hourly
       interval = 1.hour
@@ -23,6 +23,13 @@ module Arask
       interval = 1.month
     end
     interval = interval.to_s.to_i
+    unless task.nil?
+      script = "Rake::Task['#{task}'].invoke"
+    end
+    if script.nil?
+      puts 'Arask: You did not specify a script or task to run!'
+      return
+    end
     begin
       job = AraskJob.where(job: script, interval: interval).first
       if job
@@ -46,7 +53,12 @@ module Arask
         AraskJob.where('execute_at < ?', DateTime.now).each do |job|
           job.run
         end
-        Arask.time_cache = 5.minutes.from_now
+        next_job = AraskJob.order(execute_at: :desc).first
+        if next_job
+          Arask.time_cache = next_job.interval.seconds.from_now
+        else
+          Arask.time_cache = 5.minutes.from_now
+        end
       end
     end
   end
