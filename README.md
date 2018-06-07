@@ -6,7 +6,7 @@ Beware that these tasks are only run when ActionController has successfully rend
 ## Usage
 After installation, you can edit config/initializers/arask.rb with your tasks.
 
-# Examples
+### Examples
 ```ruby
 arask.create script: 'puts "IM ALIVE!"', interval: :daily, run_first_time: true
 arask.create script: 'Attachment.process_new', interval: 5.hours
