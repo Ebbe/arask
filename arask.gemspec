@@ -9,14 +9,14 @@ Gem::Specification.new do |s|
   s.version     = Arask::VERSION
   s.authors     = ["Esben Damgaard"]
   s.email       = ["esben@hvemder.dk"]
-  s.homepage    = "http://github.com/"
+  s.homepage    = "http://github.com/Ebbe/arask"
   s.summary     = "Automatic RAils taSKs"
   s.description = "With minimal setup, be able to regularly run tasks."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency "rails", "~> 5.1.0"
+  s.add_dependency "rails", ">= 5.1.0"
 
   s.add_development_dependency "sqlite3"
 end
