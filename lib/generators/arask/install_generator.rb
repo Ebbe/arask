@@ -8,6 +8,6 @@ class Arask::InstallGenerator < Rails::Generators::Base
     Arask::InstallGenerator.source_root File.expand_path('../../arask', __FILE__)
     copy_file '../../arask/initialize.rb', 'config/initializers/arask.rb'
 
-    generate 'migration', 'create_arask_jobs job:string execute_at:datetime interval:integer'
+    generate 'migration', 'create_arask_jobs job:string execute_at:datetime:index interval:integer'
   end
 end
