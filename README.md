@@ -1,7 +1,7 @@
 # Arask
 Automatic RAils taSKs.
 
-Beware that these tasks are only run when ActionController has successfully rendered an action. The interval specified is the `least` time that will go since last run.
+Beware that these tasks are only run when ActionController has successfully rendered an action. The interval specified is the _least_ time that will go since last run.
 
 ## Usage
 After installation, you can edit config/initializers/arask.rb with your tasks.
