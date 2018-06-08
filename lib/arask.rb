@@ -51,26 +51,27 @@ module Arask
     queue_as :default
 
     def perform
-      Arask.time_cache ||= Time.now
-      if Arask.time_cache <= Time.now
-        AraskJob.transaction do
-          AraskJob.where('execute_at < ?', DateTime.now).lock.each do |job|
-            job.run
-          end
+      AraskJob.transaction do
+        AraskJob.where('execute_at < ?', DateTime.now).lock.each do |job|
+          job.run
         end
-        next_job = AraskJob.order(execute_at: :desc).first
-        if next_job
-          Arask.time_cache = next_job.interval.seconds.from_now
-        else
-          Arask.time_cache = 5.minutes.from_now
-        end
+      end
+      next_job = AraskJob.order(execute_at: :desc).first
+      if next_job
+        Arask.time_cache = next_job.interval.seconds.from_now
+      else
+        Arask.time_cache = 5.minutes.from_now
       end
     end
   end
 
   ActionController::Base.instance_eval do
     after_action do
-      RunJobs.perform_later
+      Arask.time_cache ||= Time.now
+      if Arask.time_cache <= Time.now
+        Arask.time_cache = 5.minutes.from_now
+        RunJobs.perform_later
+      end
     end
   end
 end
