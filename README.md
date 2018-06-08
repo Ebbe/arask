@@ -1,5 +1,5 @@
 # Arask
-Automatic RAils taSKs.
+Automatic RAils taSKs (with minimal setup).
 
 Beware that these tasks are only run when ActionController has successfully rendered an action. The interval specified is the _least_ time that will go since last run. If no one visits your rails server, no tasks will run. For many tasks this is fine.
 
