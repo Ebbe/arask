@@ -18,22 +18,28 @@ arask.create task: 'my:awesome_task', interval: :hourly
 
 ## Installation
 Add this line to your application's Gemfile:
-
 ```ruby
 gem 'arask'
 ```
 
-And then execute:
+Execute:
 ```bash
 $ bundle
 ```
 
-Then install the initializer template and migration:
+Install the initializer template and migration:
 ```bash
 $ rails generate arask:install
 ```
 
 Setup your tasks in config/initializers/arask.rb.
+
+## Todos
+* Be able to setup error handling. For instance in initializer: `arask.on_fail email: 'gr34test_dev@example.com'`
+* Have a "try again" feature. For instance `arask.create script: 'raise "I failed"', interval: :daily, fail_retry: 5.minutes, retry_at_most: 2`
+
+## Caveats
+If you reload a database dump, your jobs could be run again.
 
 ## Contributing
 Please use https://github.com/Ebbe/arask
