@@ -1,9 +1,7 @@
 # Arask
 Automatic RAils taSKs (with minimal setup).
 
-Beware that these tasks are only run when ActionController has successfully rendered an action. The interval specified is the _least_ time that will go since last run. If no one visits your rails server, no tasks will run. For many tasks this is fine.
-
-The interval starts when the task has started running. If a task with the interval `:hourly` is run at 08:37PM, then it will run the next time ActionController has rendered an action after 09:37PM.
+The interval starts when the task has started running. If a task with the interval `:hourly` is run at 08:37PM, then it will run the next time at 09:37PM.
 
 ## Usage
 After installation, you can edit config/initializers/arask.rb with your tasks.
@@ -24,12 +22,9 @@ gem 'arask'
 
 Execute:
 ```bash
-$ bundle
-```
-
-Install the initializer template and migration:
-```bash
+$ bundle install
 $ rails generate arask:install
+$ rails db:migrate
 ```
 
 Setup your tasks in config/initializers/arask.rb.
