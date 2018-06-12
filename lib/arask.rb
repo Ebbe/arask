@@ -9,6 +9,17 @@ module Arask
     yield Arask
     begin
       AraskJob.all.where.not(id: @jobs_touched).delete_all
+      Arask.queue_self
+    rescue
+    end
+  end
+
+  def self.queue_self
+    begin
+      next_job_run = AraskJob.order(execute_at: :asc).first.try(:execute_at)
+      # At least check database for jobs every 5 minutes
+      next_job_run = 5.minutes.from_now if next_job_run.nil? or (next_job_run - DateTime.now)/60 > 5
+      RunJobs.set(wait_until: next_job_run).perform_later
     rescue
     end
   end
@@ -51,27 +62,15 @@ module Arask
     queue_as :default
 
     def perform
-      AraskJob.transaction do
-        AraskJob.where('execute_at < ?', DateTime.now).lock.each do |job|
-          job.run
+      begin
+        AraskJob.transaction do
+          AraskJob.where('execute_at < ?', DateTime.now).lock.each do |job|
+            job.run
+          end
         end
+      rescue
       end
-      next_job = AraskJob.order(execute_at: :desc).first
-      if next_job
-        Arask.time_cache = next_job.interval.seconds.from_now
-      else
-        Arask.time_cache = 5.minutes.from_now
-      end
-    end
-  end
-
-  ActionController::Base.instance_eval do
-    after_action do
-      Arask.time_cache ||= Time.now
-      if Arask.time_cache <= Time.now
-        Arask.time_cache = 5.minutes.from_now
-        RunJobs.perform_later
-      end
+      Arask.queue_self
     end
   end
 end
