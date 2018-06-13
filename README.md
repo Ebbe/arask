@@ -14,6 +14,8 @@ arask.create script: 'puts "IM ALIVE!"', interval: :daily, run_first_time: true
 arask.create script: 'Attachment.process_new', interval: 5.hours if Rails.env.production?
 # Run rake task:
 arask.create task: 'my:awesome_task', interval: :hourly
+# On exceptions, send email
+arask.on_exception email: 'errors@example.com'
 ```
 
 ## Installation
@@ -32,7 +34,6 @@ $ rails db:migrate
 Setup your tasks in config/initializers/arask.rb. Initially it looks [like this](lib/arask/initialize.rb).
 
 ## Todos
-* Be able to setup error handling. For instance in initializer: `arask.on_fail email: 'gr34test_dev@example.com'`
 * Have a "try again" feature. For instance `arask.create script: 'raise "I failed"', interval: :daily, fail_retry: 5.minutes, retry_at_most: 2`
 * Tests
 * Enable cron syntax: `arask.create script: 'User.find_admin.send_log', cron: '*/30 * * * *'`

@@ -10,10 +10,18 @@ module Arask
         end
         eval(self.job)
       rescue Exception => e
-        # TODO: Alert broken job
         puts 'Arask: Job failed'
         p self
         puts e.message
+
+        unless Arask.exception_email.nil?
+          ActionMailer::Base.mail(
+            from: Arask.exception_email_from,
+            to: Arask.exception_email,
+            subject: "Arask failed",
+            body: "Job: #{self.inspect}\n\nException:\n#{e.message}"
+          ).deliver
+        end
       end
     end
   end
