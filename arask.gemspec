@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.name        = "arask"
   s.version     = Arask::VERSION
   s.authors     = ["Esben Damgaard"]
-  s.email       = ["esben@hvemder.dk"]
+  s.email       = ["ebbe@hvemder.dk"]
   s.homepage    = "http://github.com/Ebbe/arask"
   s.summary     = "Automatic RAils taSKs (with minimal setup)"
   s.description = "With minimal setup, be able to regularly run tasks."
