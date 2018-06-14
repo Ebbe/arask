@@ -2,6 +2,7 @@ require "arask/railtie"
 require "arask/arask_job"
 require "arask/run_jobs"
 require "arask/setup"
+require 'fugit' # To parse cron
 
 module Arask
   class << self; attr_accessor :jobs_touched, :exception_email, :exception_email_from; end
