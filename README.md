@@ -3,7 +3,7 @@ Automatic RAils taSKs (with minimal setup).
 
 No need to setup anything outside of Rails. If Rails is running, so is Arask.
 
-The interval starts when the task has started running. If a task with the interval `:hourly` is run at 08:37PM, then it will run the next time at 09:37PM.
+Use cron syntax or simply define the interval.
 
 ## Usage
 After installation, you can edit config/initializers/arask.rb with your tasks.
@@ -12,11 +12,21 @@ After installation, you can edit config/initializers/arask.rb with your tasks.
 ```ruby
 arask.create script: 'puts "IM ALIVE!"', interval: :daily, run_first_time: true
 arask.create script: 'Attachment.process_new', interval: 5.hours if Rails.env.production?
+arask.create task: 'send:logs', cron: '0 2 * * *' # At 02:00 every day
+arask.create task: 'update:cache', cron: '*/5 * * * *' # Every 5 minutes
 # Run rake task:
 arask.create task: 'my:awesome_task', interval: :hourly
 # On exceptions, send email
 arask.on_exception email: 'errors@example.com'
 ```
+
+### About cron
+Arask uses [fugit](https://github.com/floraison/fugit) to parse cron and get next execution time. It follows normal cron syntax. You can test your cron at https://crontab.guru/.
+
+Not supported is `@reboot`.
+
+### About interval
+The interval starts when the task has started running. If a task with the interval `:hourly` is run at 08:37PM, then it will run the next time at 09:37PM.
 
 ## Installation
 Add this line to your application's Gemfile:

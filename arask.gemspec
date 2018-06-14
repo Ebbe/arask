@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email       = ["ebbe@hvemder.dk"]
   s.homepage    = "http://github.com/Ebbe/arask"
   s.summary     = "Automatic RAils taSKs (with minimal setup)"
-  s.description = "With minimal setup, be able to regularly run tasks."
+  s.description = "With minimal setup, be able to regularly run tasks in Rails. Either user cron syntax or simply define an interval."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
