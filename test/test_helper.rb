@@ -19,3 +19,8 @@ if ActiveSupport::TestCase.respond_to?(:fixture_path=)
   ActiveSupport::TestCase.file_fixture_path = ActiveSupport::TestCase.fixture_path + "/files"
   ActiveSupport::TestCase.fixtures :all
 end
+
+
+# Setup db
+ActiveRecord::Base.establish_connection adapter: "sqlite3", database: ":memory:"
+load File.dirname(__FILE__) + '/dummy/db/schema.rb'

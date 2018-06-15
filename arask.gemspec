@@ -20,5 +20,4 @@ Gem::Specification.new do |s|
   s.add_dependency "fugit", "~> 1.1"
 
   s.add_development_dependency "sqlite3"
-  s.add_development_dependency "rspec"
 end

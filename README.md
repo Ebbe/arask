@@ -1,7 +1,7 @@
 # Arask
 Automatic RAils taSKs (with minimal setup).
 
-No need to setup anything outside of Rails. If Rails is running, so is Arask.
+No need to setup anything outside of Rails. If Rails is running, so is Arask. If Rails has been stopped, the next time rails starts, Arask will go through overdue jobs and perform them.
 
 Use cron syntax or simply define the interval.
 
