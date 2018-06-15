@@ -8,6 +8,9 @@ module Arask
   class << self; attr_accessor :jobs_touched, :exception_email, :exception_email_from; end
 
   def self.setup
+    # Make sure we only run setup if Rails is actually run as a server.
+    return unless defined?(Rails::Server)
+
     Arask.jobs_touched = []
     yield Setup
     begin
