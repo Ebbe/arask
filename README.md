@@ -1,4 +1,7 @@
 # Arask
+[![Build Status](https://travis-ci.org/Ebbe/arask.svg?branch=master)](https://travis-ci.org/Ebbe/arask)
+[![Gem Version](https://badge.fury.io/rb/arask.svg)](https://badge.fury.io/rb/arask)
+
 Automatic RAils taSKs (with minimal setup).
 
 No need to setup anything outside of Rails. If Rails is running, so is Arask. If Rails has been stopped, the next time rails starts, Arask will go through overdue jobs and perform them.
