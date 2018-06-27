@@ -48,7 +48,6 @@ Setup your tasks in config/initializers/arask.rb. Initially it looks [like this]
 
 ## Todos
 * Have a "try again" feature. For instance `arask.create script: 'raise "I failed"', interval: :daily, fail_retry: 5.minutes, retry_at_most: 2`
-* Tests
 
 ## Setup for Heroku
 None. But if you use a hobby dyno and it falls to sleep, so will Arask. As soon as the dyno wakes up, Arask will run any pending jobs.
