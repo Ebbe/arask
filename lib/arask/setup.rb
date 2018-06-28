@@ -6,7 +6,7 @@ module Arask
       puts "Arask could not parse parameter for on_exception!" unless email.class == String
     end
 
-    def self.create(script: nil, task: nil, interval: nil, cron: nil, run_first_time: false)
+    def self.create(script: nil, task: nil, job: nil, interval: nil, cron: nil, run_first_time: false)
       interval = parse_interval_or_cron(interval, cron)
       if interval.nil?
         puts 'Arask: You did not specify either cron: or interval:! When should the task run?'
@@ -14,6 +14,9 @@ module Arask
       end
       unless task.nil?
         script = "Rake::Task['#{task}'].invoke"
+      end
+      unless job.nil?
+        script = "#{job}.perform_now"
       end
       if script.nil?
         puts 'Arask: You did not specify a script or task to run!'
