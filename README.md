@@ -9,6 +9,21 @@ No need to setup anything outside of Rails. If Rails is running, so is Arask. If
 
 Use cron syntax or simply define the interval.
 
+## Installation
+Add this line to your application's Gemfile:
+```ruby
+gem 'arask'
+```
+
+Execute:
+```bash
+$ bundle install
+$ rails generate arask:install
+$ rails db:migrate
+```
+
+Setup your tasks in config/initializers/arask.rb. Initially it looks [like this](lib/arask/initialize.rb).
+
 ## Usage
 After installation, you can edit config/initializers/arask.rb with your tasks.
 
@@ -43,21 +58,6 @@ Not supported is `@reboot`.
 
 ### About interval
 The interval starts when the task has started running. If a task with the interval `:hourly` is run at 08:37PM, then it will run the next time at 09:37PM.
-
-## Installation
-Add this line to your application's Gemfile:
-```ruby
-gem 'arask'
-```
-
-Execute:
-```bash
-$ bundle install
-$ rails generate arask:install
-$ rails db:migrate
-```
-
-Setup your tasks in config/initializers/arask.rb. Initially it looks [like this](lib/arask/initialize.rb).
 
 ## Todos
 * Have a "try again" feature. For instance `arask.create script: 'raise "I failed"', interval: :daily, fail_retry: 5.minutes, retry_at_most: 2`
