@@ -35,11 +35,11 @@ class Arask::Test < ActiveSupport::TestCase
     assert(Arask::AraskJob.first.execute_at == 5.days.from_now)
   end
 
-  test 'maximum wait time is 5 minutes' do
+  test 'maximum wait time is 1 day' do
     travel_to Time.current
-    assert_enqueued_with at: 5.minutes.from_now do
+    assert_enqueued_with at: 1.day.from_now do
       Arask.setup do |arask|
-        arask.create script: 'random"', interval: :daily
+        arask.create script: 'random"', interval: 25.hours
       end
     end
   end

@@ -25,7 +25,7 @@ module Arask
     begin
       next_job_run = AraskJob.order(execute_at: :asc).first.try(:execute_at)
       # At least check database for jobs every 5 minutes
-      next_job_run = 5.minutes.from_now if next_job_run.nil? or (next_job_run - DateTime.now)/60 > 5
+      next_job_run = 1.day.from_now if next_job_run.nil? or (next_job_run - DateTime.now)/60/60 > 24
       RunJobs.set(wait_until: next_job_run).perform_later
     rescue
     end
