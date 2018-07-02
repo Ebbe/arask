@@ -8,14 +8,16 @@ module Arask
   class << self; attr_accessor :jobs_touched, :exception_email, :exception_email_from; end
 
   def self.setup
-    # Make sure we only run setup if Rails is actually run as a server or testing.
-    return unless defined?(Rails::Server) or Rails.env.test?
-    Arask.jobs_touched = []
-    yield Setup
-    begin
-      AraskJob.all.where.not(id: Arask.jobs_touched).delete_all
-      Arask.queue_self
-    rescue
+    ActiveSupport.on_load :after_initialize, yield: true do
+      # Make sure we only run setup if Rails is actually run as a server or testing.
+      return unless defined?(Rails::Server) or Rails.env.test?
+      Arask.jobs_touched = []
+      yield Setup
+      begin
+        AraskJob.all.where.not(id: Arask.jobs_touched).delete_all
+        Arask.queue_self
+      rescue
+      end
     end
   end
 
