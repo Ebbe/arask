@@ -9,7 +9,7 @@ module Arask
     def self.create(script: nil, task: nil, job: nil, interval: nil, cron: nil, run_first_time: false)
       interval = parse_interval_or_cron(interval, cron)
       if interval.nil?
-        puts 'Arask: You did not specify either cron: or interval:! When should the task run?'
+        puts 'Arask: You did not specify neither cron: nor interval:! When should the task run?'
         return
       end
       unless task.nil?
