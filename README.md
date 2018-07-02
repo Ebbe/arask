@@ -61,6 +61,12 @@ The interval starts when the task has started running. If a task with the interv
 
 ## Todos
 * Have a "try again" feature. For instance `arask.create script: 'raise "I failed"', interval: :daily, fail_retry: 5.minutes, retry_at_most: 2`
+* Be able to run a block on error
+* Be able to specify line and number that failed for an exception:
+```ruby
+file,line,_ = caller.first.split(' ')[0].split(':')
+fileline = File.readlines(file)[line.to_i - 1].strip
+```
 
 ## Setup for Heroku
 None. But if you use a hobby dyno and it falls to sleep, so will Arask. As soon as the dyno wakes up, Arask will run any pending jobs.
