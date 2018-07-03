@@ -49,6 +49,11 @@ arask.create script: 'Attachment.process_new', interval: 5.hours, run_first_time
 
 # On exceptions, send email with details
 arask.on_exception email: 'errors@example.com'
+
+# Run code on exceptions
+arask.on_exception do |exception, arask_job|
+  Honeybadger.notify(exception)
+end
 ```
 
 ### About cron
@@ -64,7 +69,7 @@ The interval starts when the task has started running. If a task with the interv
 * Be able to run a block when an exception occurs. `arask.on_exception do <code> end`
 * Be able to specify line and number that failed for an exception:
 ```ruby
-file,line,_ = caller.first.split(' ')[0].split(':')
+file,line,_ = caller.first.split(':')
 fileline = File.readlines(file)[line.to_i - 1].strip
 ```
 

@@ -21,4 +21,9 @@ Arask.setup do |arask|
 
   # On exceptions, send email with details
   #arask.on_exception email: 'errors@example.com'
+
+  # Run code on exceptions
+  #arask.on_exception do |exception, arask_job|
+  #  Honeybadger.notify(exception)
+  #end
 end

@@ -1,9 +1,12 @@
 module Arask
   class Setup
-    def self.on_exception(email: nil, from: 'robot@server')
-      Arask.exception_email = email
-      Arask.exception_email_from = from
-      puts "Arask could not parse parameter for on_exception!" unless email.class == String
+    def self.on_exception(email: nil, from: 'robot@server', &block)
+      Arask.exception_email = email unless email.nil?
+      Arask.exception_email_from = from unless from.nil?
+      puts "Arask could not parse parameter for on_exception!" unless email.nil? or email.class == String
+      if block_given?
+        Arask.exception_block = block
+      end
     end
 
     def self.create(script: nil, task: nil, job: nil, interval: nil, cron: nil, run_first_time: false)

@@ -16,6 +16,9 @@ module Arask
         p self
         puts e.message
 
+        unless Arask.exception_block.nil?
+          Arask.exception_block.call(e, self)
+        end
         unless Arask.exception_email.nil?
           ActionMailer::Base.mail(
             from: Arask.exception_email_from,
