@@ -24,6 +24,6 @@ Arask.setup do |arask|
 
   # Run code on exceptions
   #arask.on_exception do |exception, arask_job|
-  #  Honeybadger.notify(exception)
+  #  MyExceptionHandler.new(exception)
   #end
 end
