@@ -6,7 +6,7 @@ class Arask::Test < ActiveSupport::TestCase
     # Stop time (Yes I am God)
     travel_to Date.today.noon
 
-    Arask.setup do |arask|
+    Arask.setup(true) do |arask|
       arask.create script: 'random', cron: '0 0 1 1 1', run_first_time: true
     end
     assert(Arask::AraskJob.first.execute_at == Time.now)

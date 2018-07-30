@@ -5,7 +5,7 @@ class Arask::Test < ActiveSupport::TestCase
     # Stop time (Yes I am God)
     travel_to Time.utc(2000, 4, 5, 10, 0, 5)
 
-    Arask.setup do |arask|
+    Arask.setup(true) do |arask|
       arask.create script: '1+1', cron: '* * * * *'
       arask.create script: '1+2', cron: '* * * * *'
     end

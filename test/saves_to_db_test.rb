@@ -17,19 +17,19 @@ class Arask::Test < ActiveSupport::TestCase
 
 
     assert_enqueued_with at: 2.minutes.from_now do
-      Arask.setup do |arask|
+      Arask.setup(true) do |arask|
         arask.create script: 'random', interval: 2.minutes
       end
       assert(Arask::AraskJob.first.execute_at == 2.minutes.from_now)
       assert_enqueued_jobs 1
     end
 
-    Arask.setup do |arask|
+    Arask.setup(true) do |arask|
       arask.create script: 'random2"', interval: 10.hours
     end
     assert(Arask::AraskJob.first.execute_at == 10.hours.from_now)
 
-    Arask.setup do |arask|
+    Arask.setup(true) do |arask|
       arask.create script: 'random3', interval: 5.days
     end
     assert(Arask::AraskJob.first.execute_at == 5.days.from_now)
@@ -38,7 +38,7 @@ class Arask::Test < ActiveSupport::TestCase
   test 'maximum wait time is 1 day' do
     travel_to Time.current
     assert_enqueued_with at: 1.day.from_now do
-      Arask.setup do |arask|
+      Arask.setup(true) do |arask|
         arask.create script: 'random"', interval: 25.hours
       end
     end

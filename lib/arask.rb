@@ -7,9 +7,9 @@ require 'fugit' # To parse cron
 module Arask
   class << self; attr_accessor :jobs_touched, :exception_email, :exception_email_from, :exception_block; end
 
-  def self.setup
+  def self.setup(force_run = false)
     # Make sure we only run setup if Rails is actually run as a server or testing.
-    return unless defined?(Rails::Server) or Rails.env.test?
+    return unless defined?(Rails::Server) or force_run
     # If we don't wait and rails is setup to use another language, ActiveJob
     # saves what is now (usually :en) and reloads that when trying to run the
     # job. Renderering an I18n error of unsupported language.

@@ -7,11 +7,11 @@ class Arask::Test < ActiveSupport::TestCase
 
     exception_text = nil
     exception_job_text = nil
-    Arask.setup do |arask|
+    Arask.setup(true) do |arask|
       arask.create script: 'puts "no error"', cron: '* * * * *', run_first_time: true
       arask.create script: 'raise "Message!"', cron: '* * * * *', run_first_time: true
       arask.create script: 'puts "no error"', cron: '* * * * *', run_first_time: true
-      
+
       arask.on_exception do |exception, job|
         exception_text = exception.to_s
         exception_job_text = job.job
