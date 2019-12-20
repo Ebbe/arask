@@ -72,8 +72,13 @@ file,line,_ = caller.first.split(':')
 fileline = File.readlines(file)[line.to_i - 1].strip
 ```
 
-## Setup for Heroku
-None. But if you use a hobby dyno and it falls to sleep, so will Arask. As soon as the dyno wakes up, Arask will run any pending jobs.
+## Special environments
+
+### Heroku
+Nothing special to setup. But if you use a hobby dyno and it falls to sleep, so will Arask. As soon as the dyno wakes up, Arask will run any pending jobs.
+
+### Docker
+Nothing special to setup.
 
 ## Caveats
 If you reload a database dump, your jobs could be run again.
