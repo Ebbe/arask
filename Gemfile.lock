@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    arask (1.2.3)
+    arask (1.2.4)
       fugit (~> 1.1)
       rails (>= 5.0)
 
@@ -100,8 +100,8 @@ GEM
     mini_mime (1.0.2)
     mini_portile2 (2.5.0)
     minitest (5.14.4)
-    nio4r (2.5.5)
-    nokogiri (1.11.1)
+    nio4r (2.5.7)
+    nokogiri (1.11.2)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
     raabro (1.4.0)
@@ -148,7 +148,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.1)
+    sqlite3 (1.4.2)
     term-ansicolor (1.7.1)
       tins (~> 1.0)
     thor (1.1.0)
@@ -169,4 +169,4 @@ DEPENDENCIES
   sqlite3
 
 BUNDLED WITH
-   1.16.2
+   2.2.14
