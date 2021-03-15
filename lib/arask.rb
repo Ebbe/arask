@@ -5,22 +5,25 @@ require "arask/setup"
 require 'fugit' # To parse cron
 
 module Arask
-  class << self; attr_accessor :jobs_touched, :exception_email, :exception_email_from, :exception_block; end
+  class << self; attr_accessor :jobs_touched, :exception_email, :exception_email_from, :exception_block, :jobs_block; end
 
-  def self.setup(force_run = false)
-    # Make sure we only run setup if Rails is actually run as a server or testing.
-    return unless defined?(Rails::Server) or force_run
-    # If we don't wait and rails is setup to use another language, ActiveJob
-    # saves what is now (usually :en) and reloads that when trying to run the
-    # job. Renderering an I18n error of unsupported language.
-    ActiveSupport.on_load :after_initialize, yield: true do
-      Arask.jobs_touched = []
-      yield Setup
-      begin
-        AraskJob.all.where.not(id: Arask.jobs_touched).delete_all
-        Arask.queue_self
-      rescue
-      end
+  def self.setup(force_run = false, &block)
+    Arask.jobs_block = block
+    # Make sure we only run setup now if we are testing.
+    # Else we would run them at every cli execution.
+    # railtie.rb inits the jobs when the server is ready
+    Arask.init_jobs if force_run
+  end
+
+  def self.init_jobs
+    Arask.jobs_touched = []
+    Arask.jobs_block.call(Setup)
+    Arask.jobs_block = nil
+    begin
+      AraskJob.all.where.not(id: Arask.jobs_touched).delete_all
+      Arask.jobs_touched = nil
+      Arask.queue_self
+    rescue
     end
   end
 
