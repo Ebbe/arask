@@ -3,6 +3,6 @@ module Arask
     # Executes when the rails server is running
     server do
       Arask.init_jobs
-    end
+    end if Rails::VERSION::MAJOR>=6
   end
 end

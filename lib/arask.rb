@@ -9,10 +9,22 @@ module Arask
 
   def self.setup(force_run = false, &block)
     Arask.jobs_block = block
-    # Make sure we only run setup now if we are testing.
-    # Else we would run them at every cli execution.
-    # railtie.rb inits the jobs when the server is ready
-    Arask.init_jobs if force_run
+    if Rails::VERSION::MAJOR>=6
+      # Make sure we only run setup now if we are testing.
+      # Else we would run them at every cli execution.
+      # railtie.rb inits the jobs when the server is ready
+      Arask.init_jobs if force_run
+    else # Rails is less than 6
+      
+      # Make sure we only run setup if Rails is actually run as a server or testing.
+      return unless defined?(Rails::Server) or force_run
+      # If we don't wait and rails is setup to use another language, ActiveJob
+      # saves what is now (usually :en) and reloads that when trying to run the
+      # job. Renderering an I18n error of unsupported language.
+      ActiveSupport.on_load :after_initialize, yield: true do
+        Arask.init_jobs
+      end
+    end
   end
 
   def self.init_jobs
