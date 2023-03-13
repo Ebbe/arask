@@ -8,9 +8,12 @@ module Arask
       calculate_new_execute_at
       begin
         if self.job.start_with?('Rake::Task')
-          Rake.load_rakefile Rails.root.join( 'Rakefile' )
+          Rake.load_rakefile Rails.root.join('Rakefile') unless Rake::Task.task_defined?(self.job[12..-3])
+          eval(self.job + '.invoke')
+          eval(self.job + '.reenable')
+        else
+          eval(self.job)
         end
-        eval(self.job)
       rescue Exception => e
         puts 'Arask: Job failed'
         p self
