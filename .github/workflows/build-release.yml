@@ -1,14 +1,14 @@
 name: Build release
 
-on: [push]
+on:
+  push:
+    tags:
+      - "v*.*.*"
 
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: read
 
     steps:
       - uses: actions/checkout@v3
@@ -22,8 +22,7 @@ jobs:
       - name: Build gem
         run: |
           gem build arask
-      - name: Upload gem
-        uses: actions/upload-artifact@v3
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          name: arask
-          path: arask-*.gem
+          files: arask-*.gem
