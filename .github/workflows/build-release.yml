@@ -1,0 +1,28 @@
+name: Build release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Ruby 3.1
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1
+          bundler-cache: true
+      - run: bundle install
+
+      - name: Build gem
+        run: |
+          gem build arask
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: arask-*.gem

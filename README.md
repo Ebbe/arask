@@ -1,7 +1,6 @@
 # Arask
 
 [![Gem Version](https://badge.fury.io/rb/arask.svg)](https://badge.fury.io/rb/arask)
-[![Build Status](https://travis-ci.org/Ebbe/arask.svg?branch=master)](https://travis-ci.org/Ebbe/arask)
 [![Coverage Status](https://coveralls.io/repos/github/Ebbe/arask/badge.svg?branch=master)](https://coveralls.io/github/Ebbe/arask?branch=master)
 
 Automatic RAils taSKs (with minimal setup).
