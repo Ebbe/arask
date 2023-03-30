@@ -16,7 +16,7 @@ module Arask
         return
       end
       unless task.nil?
-        script = "Rake::Task['#{task}'].invoke"
+        script = "Rake::Task['#{task}']"
       end
       unless job.nil?
         script = "#{job}.perform_now"
