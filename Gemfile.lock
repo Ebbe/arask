@@ -130,7 +130,7 @@ GEM
     mini_portile2 (2.8.8)
     minitest (5.25.4)
     mutex_m (0.3.0)
-    net-imap (0.3.8)
+    net-imap (0.3.9)
       date
       net-protocol
     net-pop (0.1.2)
